@@ -31,8 +31,6 @@ class RandomComputerPlayer(Player):
     def __init__(self, name: str, symbol: str) -> None:
         super().__init__(name, symbol)
 
-
-    @abc.abstractmethod
     def play_move(self, possible_moves: List[Coordinate]) -> Coordinate:
         return random.choice(possible_moves)
 
@@ -43,7 +41,7 @@ class HumanPlayer(Player):
 
     def play_move(self, possible_moves: List[Coordinate]) -> Coordinate:
         while True:
-            print(f"Enter move {self.player_type}")
+            print(f"Enter move {self.symbol}")
             try:
                 row = int(input("row: "))
                 col = int(input("column: "))

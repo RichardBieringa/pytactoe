@@ -25,7 +25,7 @@ class Board:
         """Sets a piece on the board if it is empty"""
 
         if self.board[row][col].symbol == " ":
-            self.board[row][col] = symbol
+            self.board[row][col] = Square(symbol=symbol)
         else:
             raise ValueError("Invalid move, slot was not empty!")
 

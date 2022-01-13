@@ -2,13 +2,14 @@ from pytactoe import board, player, game
 
 
 def main() -> None:
+    players = [
+        player.HumanPlayer("richard", "X"),
+        player.RandomComputerPlayer("BOT (easy)", "O"),
+    ]
 
-    player_one = player.HumanPlayer("richard", board.BoardItem.X)
-    player_two = player.ComputerPlayer("BOT (easy)", board.BoardItem.O)
+    game_instance = game.TicTacToe(player_list=players)
 
-    tictactoe = game.TicTacToe(player_one, player_two)
-
-    pass
+    game_instance.play()
 
 
 if __name__ == "__main__":
