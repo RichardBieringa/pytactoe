@@ -1,6 +1,6 @@
 import pytest
 
-from pytactoe import board, piece
+from pytactoe import board
 
 
 @pytest.mark.parametrize(

@@ -1,11 +1,11 @@
-from pytactoe import piece
+import dataclasses
 
 
+@dataclasses.dataclass
 class Square:
     """Represents a square on the board."""
 
-    def __init__(self, symbol: str) -> None:
-        self.symbol = symbol
+    symbol: str = " "
 
     def __repr__(self) -> str:
         return f"[{self.symbol}]"
@@ -31,5 +31,4 @@ class Board:
 
     def __repr__(self) -> str:
         """Custom representation for the TicTacToe board"""
-
-        return "\n".join([" ".join([row for row in self.board])])
+        return "\n".join([" ".join([str(col) for col in row]) for row in self.board])
