@@ -1,6 +1,6 @@
 import pytest
 
-from pytactoe import board
+from pytactoe import board, piece
 
 
 @pytest.mark.parametrize(
@@ -29,7 +29,7 @@ def test_emtpy_board():
 
     for row in range(height):
         for col in range(width):
-            assert board_instance.board[row][col] == board.BoardItem.empty
+            assert board_instance.board[row][col] == board.Square(symbol=" ")
 
 
 def test_board_representation():

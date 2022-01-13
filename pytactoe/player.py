@@ -1,43 +1,57 @@
-import enum
 import abc
+import random
 
+from typing import Tuple, List
 
-class PlayerType(enum.Enum):
-    """Represents the the piece the player will play"""
-
-    X = enum.auto()
-    O = enum.auto()
+Coordinate = Tuple[int, int]
 
 
 class Player(abc.ABC):
     """Represents a player in the tic tac toe game."""
 
-    @abc.abstractmethod
-    def __init__(self, name: str, type: PlayerType) -> None:
+    def __init__(self, name: str, symbol: str) -> None:
         self.name = name
-        self.type = type
-        pass
+        self.symbol = symbol
+
+        if len(symbol) > 1:
+            raise ValueError("Player symbol can only be a single character")
+
+        if symbol == " ":
+            raise ValueError("Player symbol can not be empty")
 
     @abc.abstractmethod
-    def get_move(self):
+    def play_move(self, possible_moves: List[Coordinate]) -> Coordinate:
+        """Gets the next move from the player"""
         pass
 
 
-class ComputerPlayer(Player):
-    def __init__(self, name: str, type: PlayerType) -> None:
-        self.type = type
-        self.name = name
-        pass
+class RandomComputerPlayer(Player):
+    """A computer player that plays random moves"""
 
-    def get_move(self):
-        pass
+    def __init__(self, name: str, symbol: str) -> None:
+        super().__init__(name, symbol)
+
+
+    @abc.abstractmethod
+    def play_move(self, possible_moves: List[Coordinate]) -> Coordinate:
+        return random.choice(possible_moves)
 
 
 class HumanPlayer(Player):
-    def __init__(self, name: str, type: PlayerType) -> None:
-        self.type = type
-        self.name = name
-        pass
+    def __init__(self, name: str, symbol: str) -> None:
+        super().__init__(name, symbol)
 
-    def get_move(self):
-        pass
+    def play_move(self, possible_moves: List[Coordinate]) -> Coordinate:
+        while True:
+            print(f"Enter move {self.player_type}")
+            try:
+                row = int(input("row: "))
+                col = int(input("column: "))
+
+                move = (row, col)
+                if move in possible_moves:
+                    return (row, col)
+                else:
+                    raise ValueError
+            except ValueError:
+                print("row/col should be valid numbers")

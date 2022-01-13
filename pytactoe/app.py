@@ -1,9 +1,10 @@
 from pytactoe import board, player, game
 
+
 def main() -> None:
 
-    player_one = player.HumanPlayer("richard", player.PlayerType.X)
-    player_two = player.ComputerPlayer("BOT (easy)", player.PlayerType.O)
+    player_one = player.HumanPlayer("richard", board.BoardItem.X)
+    player_two = player.ComputerPlayer("BOT (easy)", board.BoardItem.O)
 
     tictactoe = game.TicTacToe(player_one, player_two)
 
