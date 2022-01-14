@@ -87,13 +87,13 @@ class Board:
 
                         case Direction.DIAGONAL_NE:
                             if i > 0 and j < self.width - 1:
-                                matrix[i][j] = matrix[i - 1][j + 1]
+                                matrix[i][j] = matrix[i - 1][j + 1] + 1
                             else:
                                 matrix[i][j] = 1
 
                         case Direction.DIAGONAL_SE:
                             if i > 0 and j > 0:
-                                matrix[i][j] = matrix[i - 1][j - 1]
+                                matrix[i][j] = matrix[i - 1][j - 1] + 1
                             else:
                                 matrix[i][j] = 1
                 
