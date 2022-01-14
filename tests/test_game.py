@@ -1,5 +1,5 @@
 import pytest
-from pytactoe import game, board, player
+from pytactoe import game, player
 
 
 def test_not_similar_teams():
