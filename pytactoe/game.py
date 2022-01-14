@@ -92,7 +92,7 @@ class TicTacToe:
             max_sequence = self.board.get_longest_sequence_for_symbol(player.symbol)
 
             # Checks if the player has reached the threshold
-            if max_sequence > self.sequence_required:
+            if max_sequence >= self.sequence_required:
                 return player
         
         return None

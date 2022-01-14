@@ -48,11 +48,9 @@ class Board:
         max_val = 0
         for direction in Direction:
             sequence_length = self.get_longest_sequence_in_direction(player_symbol, direction)
-            print(f"SEQ({direction}) [{player_symbol}] = {sequence_length}")
             if sequence_length > max_val:
                 max_val = sequence_length
 
-        print(f"Longest sequence for {player_symbol} = {max_val}")
         return max_val
 
     
@@ -66,79 +64,43 @@ class Board:
 
         longest_sequence = 0
 
-        match direction:
-            case Direction.HORIZONTAL:
-                for i in range(self.height):
-                    for j in range(self.width):
-                        square = self.board[i][j]
+        for i in range(self.height):
+            for j in range(self.width):
+                square = self.board[i][j]
 
-                        # We should increase the score
-                        if square.symbol == player_symbol:
+                # We should increase the score
+                if square.symbol == player_symbol:
 
-                            # Check if previous item set
-                            if j > 1:
+                    # Check if previous item set per direction
+                    match direction:
+                        case Direction.HORIZONTAL:
+                            if j > 0:
                                 matrix[i][j] = matrix[i][j - 1] + 1
                             else:
                                 matrix[i][j] = 1
-                        
-                        # Check if we have a new longest sequence
-                        if matrix[i][j] > longest_sequence:
-                            longest_sequence = matrix[i][j]
 
-            case Direction.VERTICAL:
-                for i in range(self.height):
-                    for j in range(self.width):
-                        square = self.board[i][j]
-
-                        # We should increase the score
-                        if square.symbol == player_symbol:
-
-                            # Check if previous item set
-                            if i > 1:
+                        case Direction.VERTICAL:
+                            if i > 0:
                                 matrix[i][j] = matrix[i - 1][j] + 1
                             else:
                                 matrix[i][j] = 1
 
-                        # Check if we have a new longest sequence
-                        if matrix[i][j] > longest_sequence:
-                            longest_sequence = matrix[i][j]
-
-            case Direction.DIAGONAL_NE:
-                for i in range(self.height):
-                    for j in range(self.width):
-                        square = self.board[i][j]
-
-                        # We should increase the score
-                        if square.symbol == player_symbol:
-
-                            # Check if previous item set
-                            if i > 1 and j < self.width - 1:
+                        case Direction.DIAGONAL_NE:
+                            if i > 0 and j < self.width - 1:
                                 matrix[i][j] = matrix[i - 1][j + 1]
                             else:
                                 matrix[i][j] = 1
 
-                        # Check if we have a new longest sequence
-                        if matrix[i][j] > longest_sequence:
-                            longest_sequence = matrix[i][j]
-
-            case Direction.DIAGONAL_SE:
-                for i in range(self.height):
-                    for j in range(self.width):
-                        square = self.board[i][j]
-
-                        # We should increase the score
-                        if square.symbol == player_symbol:
-
-                            # Check if previous item set
-                            if i > 1 and j > 1:
+                        case Direction.DIAGONAL_SE:
+                            if i > 0 and j > 0:
                                 matrix[i][j] = matrix[i - 1][j - 1]
                             else:
                                 matrix[i][j] = 1
-
-                        # Check if we have a new longest sequence
-                        if matrix[i][j] > longest_sequence:
-                            longest_sequence = matrix[i][j]
-
+                
+                # Check if we have a new longest sequence
+                if matrix[i][j] > longest_sequence:
+                    longest_sequence = matrix[i][j]
+        
         return longest_sequence
 
 

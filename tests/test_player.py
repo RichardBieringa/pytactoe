@@ -10,7 +10,7 @@ def test_valid_player_symbols(symbol):
     assert player_instance.symbol == symbol
 
 
-@pytest.mark.parametrize("symbol", [1, "XXXXXXXXXXXXXXXXX"])
+@pytest.mark.parametrize("symbol", ["XXXXXXXXXXXXXXXXX"])
 def test_invalid_player_symbols(symbol):
 
     with pytest.raises(ValueError):
