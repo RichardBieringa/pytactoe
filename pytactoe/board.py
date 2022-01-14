@@ -7,10 +7,10 @@ class Direction(enum.Enum):
     Horizontal and Vertical patterns apply both ways but are searched left to right
     and top to bottom. The Diagonal patterns are checked from the top/bottom to right.
     """
-    HORIZONTAL:  enum.auto()
-    VERTICAL:  enum.auto()
-    DIAGONAL_NE:  enum.auto() # Goes North East
-    DIAGONAL_SE:  enum.auto() # Checks South East
+    HORIZONTAL = enum.auto()
+    VERTICAL = enum.auto()
+    DIAGONAL_NE = enum.auto() # Goes North East
+    DIAGONAL_SE =  enum.auto() # Checks South East
 
 
 @dataclasses.dataclass
@@ -47,8 +47,8 @@ class Board:
 
         max_val = 0
         for direction in Direction:
-            print(direction)
             sequence_length = self.get_longest_sequence_in_direction(player_symbol, direction)
+            print(f"SEQ({direction}) [{player_symbol}] = {sequence_length}")
             if sequence_length > max_val:
                 max_val = sequence_length
 
@@ -138,6 +138,8 @@ class Board:
                         # Check if we have a new longest sequence
                         if matrix[i][j] > longest_sequence:
                             longest_sequence = matrix[i][j]
+
+        return longest_sequence
 
 
 
