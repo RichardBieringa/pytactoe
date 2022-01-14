@@ -1,4 +1,16 @@
 import dataclasses
+import enum
+
+class Direction(enum.Enum):
+    """Represents the four patters in which a sequence on the board may exist.
+    
+    Horizontal and Vertical patterns apply both ways but are searched left to right
+    and top to bottom. The Diagonal patterns are checked from the top/bottom to right.
+    """
+    HORIZONTAL:  enum.auto()
+    VERTICAL:  enum.auto()
+    DIAGONAL_NE:  enum.auto() # Goes North East
+    DIAGONAL_SE:  enum.auto() # Checks South East
 
 
 @dataclasses.dataclass
@@ -28,6 +40,106 @@ class Board:
             self.board[row][col] = Square(symbol=symbol)
         else:
             raise ValueError("Invalid move, slot was not empty!")
+
+    def get_longest_sequence_for_symbol(self, player_symbol: str) -> int:
+        """Gets the longest sequence for a symbol in all the directions"""
+
+
+        max_val = 0
+        for direction in Direction:
+            print(direction)
+            sequence_length = self.get_longest_sequence_in_direction(player_symbol, direction)
+            if sequence_length > max_val:
+                max_val = sequence_length
+
+        print(f"Longest sequence for {player_symbol} = {max_val}")
+        return max_val
+
+    
+    def get_longest_sequence_in_direction(self, player_symbol: str, direction: Direction) -> int:
+        """Checks a single direction and returns the longest direction.
+        
+        The direction is one of the valid ways to get a sequence (horizontal, vertical, diagonal)."""
+
+        # Sets an empty matrix [width * height] to zero
+        matrix = [[0 for col in range(self.width)] for row in range(self.height)]
+
+        longest_sequence = 0
+
+        match direction:
+            case Direction.HORIZONTAL:
+                for i in range(self.height):
+                    for j in range(self.width):
+                        square = self.board[i][j]
+
+                        # We should increase the score
+                        if square.symbol == player_symbol:
+
+                            # Check if previous item set
+                            if j > 1:
+                                matrix[i][j] = matrix[i][j - 1] + 1
+                            else:
+                                matrix[i][j] = 1
+                        
+                        # Check if we have a new longest sequence
+                        if matrix[i][j] > longest_sequence:
+                            longest_sequence = matrix[i][j]
+
+            case Direction.VERTICAL:
+                for i in range(self.height):
+                    for j in range(self.width):
+                        square = self.board[i][j]
+
+                        # We should increase the score
+                        if square.symbol == player_symbol:
+
+                            # Check if previous item set
+                            if i > 1:
+                                matrix[i][j] = matrix[i - 1][j] + 1
+                            else:
+                                matrix[i][j] = 1
+
+                        # Check if we have a new longest sequence
+                        if matrix[i][j] > longest_sequence:
+                            longest_sequence = matrix[i][j]
+
+            case Direction.DIAGONAL_NE:
+                for i in range(self.height):
+                    for j in range(self.width):
+                        square = self.board[i][j]
+
+                        # We should increase the score
+                        if square.symbol == player_symbol:
+
+                            # Check if previous item set
+                            if i > 1 and j < self.width - 1:
+                                matrix[i][j] = matrix[i - 1][j + 1]
+                            else:
+                                matrix[i][j] = 1
+
+                        # Check if we have a new longest sequence
+                        if matrix[i][j] > longest_sequence:
+                            longest_sequence = matrix[i][j]
+
+            case Direction.DIAGONAL_SE:
+                for i in range(self.height):
+                    for j in range(self.width):
+                        square = self.board[i][j]
+
+                        # We should increase the score
+                        if square.symbol == player_symbol:
+
+                            # Check if previous item set
+                            if i > 1 and j > 1:
+                                matrix[i][j] = matrix[i - 1][j - 1]
+                            else:
+                                matrix[i][j] = 1
+
+                        # Check if we have a new longest sequence
+                        if matrix[i][j] > longest_sequence:
+                            longest_sequence = matrix[i][j]
+
+
 
     def __repr__(self) -> str:
         """Custom representation for the TicTacToe board"""
