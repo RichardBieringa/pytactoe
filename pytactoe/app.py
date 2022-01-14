@@ -1,4 +1,4 @@
-from pytactoe import board, player, game
+from pytactoe import player, game
 
 
 def main() -> None:

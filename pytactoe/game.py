@@ -1,8 +1,4 @@
-from lib2to3.pgen2.token import OP
-from multiprocessing.sharedctypes import Value
-from tabnanny import check
 from typing import Tuple, List, Optional
-from xmlrpc.client import Boolean
 
 from pytactoe import player
 from pytactoe import board
@@ -82,7 +78,7 @@ class TicTacToe:
 
     def check_if_winner(self) -> Optional[player.Player]:
         """Checks the board to see if any player won the game.
-        
+
         A player has won the game if the maximum sequence length
         (default = 3) has been reached by a player on the board.
         Returns the player instance if someone won, otherwise None"""
@@ -94,9 +90,8 @@ class TicTacToe:
             # Checks if the player has reached the threshold
             if max_sequence >= self.sequence_required:
                 return player
-        
-        return None
 
+        return None
 
     def check_if_finished(self) -> bool:
         """Checks to see if the game is finished.
